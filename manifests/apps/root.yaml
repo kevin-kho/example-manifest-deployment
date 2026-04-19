@@ -36,9 +36,11 @@ spec:
     name: in-cluster
   project: default
   source:
-    path: manifests/istio/base
+    path: manifests/istio/base/out
     repoURL: https://github.com/kevin-kho/example-manifest-deployment
     targetRevision: HEAD
+    directory:
+      recurse: true
   syncPolicy:
     automated:
       prune: true
@@ -60,9 +62,11 @@ spec:
     name: in-cluster
   project: default
   source:
-    path: manifests/istio/cni
+    path: manifests/istio/cni/out
     repoURL: https://github.com/kevin-kho/example-manifest-deployment
     targetRevision: HEAD
+    directory:
+      recurse: true
   syncPolicy:
     automated:
       prune: true
@@ -84,9 +88,11 @@ spec:
     name: in-cluster
   project: default
   source:
-    path: manifests/istio/istiod
+    path: manifests/istio/istiod/out
     repoURL: https://github.com/kevin-kho/example-manifest-deployment
     targetRevision: HEAD
+    directory:
+      recurse: true
   syncPolicy:
     automated:
       prune: true
@@ -107,9 +113,11 @@ spec:
     name: in-cluster
   project: default
   source:
-    path: manifests/istio/gateways
+    path: manifests/istio/gateways/out
     repoURL: https://github.com/kevin-kho/example-manifest-deployment
     targetRevision: HEAD
+    directory:
+      recurse: true
   syncPolicy:
     automated:
       prune: true
