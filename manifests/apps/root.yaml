@@ -26,7 +26,7 @@ metadata:
   # If application is deleted, resource itself is deleted
   # finalizers:
   # - resources-finalizer.argocd.argoproj.io
-  name: istio-manifest
+  name: istio-base
   namespace: argocd
 spec:
   destination:
@@ -34,7 +34,7 @@ spec:
     name: in-cluster
   project: default
   source:
-    path: manifests/istio
+    path: manifests/istio/base
     repoURL: https://github.com/kevin-kho/example-manifest-deployment
     targetRevision: HEAD
   syncPolicy:
