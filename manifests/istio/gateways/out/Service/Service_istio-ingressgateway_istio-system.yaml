@@ -14,7 +14,7 @@ metadata:
   annotations:
     {}
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   ports:
     - name: status-port
       port: 15021
