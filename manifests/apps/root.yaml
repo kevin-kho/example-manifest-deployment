@@ -19,7 +19,9 @@ spec:
     automated:
       prune: true
       selfHeal: true
+
 ---
+# istio-base
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -35,6 +37,77 @@ spec:
   project: default
   source:
     path: manifests/istio/base
+    repoURL: https://github.com/kevin-kho/example-manifest-deployment
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+# istio-cni
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  # If application is deleted, resource itself is deleted
+  # finalizers:
+  # - resources-finalizer.argocd.argoproj.io
+  name: istio-cni
+  namespace: argocd
+spec:
+  destination:
+    namespace: argocd # where the child app manifests will be created/applied
+    name: in-cluster
+  project: default
+  source:
+    path: manifests/istio/cni
+    repoURL: https://github.com/kevin-kho/example-manifest-deployment
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+# istio-istiod
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  # If application is deleted, resource itself is deleted
+  # finalizers:
+  # - resources-finalizer.argocd.argoproj.io
+  name: istio-istiod
+  namespace: argocd
+spec:
+  destination:
+    namespace: argocd # where the child app manifests will be created/applied
+    name: in-cluster
+  project: default
+  source:
+    path: manifests/istio/istiod
+    repoURL: https://github.com/kevin-kho/example-manifest-deployment
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+---
+# istio-gateways
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  # If application is deleted, resource itself is deleted
+  # finalizers:
+  # - resources-finalizer.argocd.argoproj.io
+  name: istio-gateways
+  namespace: argocd
+spec:
+  destination:
+    namespace: argocd # where the child app manifests will be created/applied
+    name: in-cluster
+  project: default
+  source:
+    path: manifests/istio/gateways
     repoURL: https://github.com/kevin-kho/example-manifest-deployment
     targetRevision: HEAD
   syncPolicy:
