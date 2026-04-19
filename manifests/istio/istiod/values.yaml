@@ -1,4 +1,4 @@
 meshConfig:
-  accessLogFile: /dev/stdout
+  accessLogFile: "/dev/stdout"
   outboundTrafficPolicy:
     mode: REGISTRY_ONLY
