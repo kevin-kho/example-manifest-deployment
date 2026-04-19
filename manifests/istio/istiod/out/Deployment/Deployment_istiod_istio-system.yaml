@@ -31,6 +31,7 @@ spec:
       annotations:
         prometheus.io/port: "15014"
         prometheus.io/scrape: "true"
+        ambient.istio.io/redirection: disabled
         sidecar.istio.io/inject: "false"
     spec:
       serviceAccountName: istiod
@@ -38,7 +39,7 @@ spec:
         fsGroup: 1337
       containers:
         - name: discovery
-          image: "docker.io/istio/pilot:1.17.2"
+          image: "docker.io/istio/pilot:1.18.7"
           args:
           - "discovery"
           - --monitoringAddr=:15014
@@ -97,6 +98,10 @@ spec:
             value: "false"
           - name: CLUSTER_ID
             value: "Kubernetes"
+          - name: GOMEMLIMIT
+            valueFrom:
+              resourceFieldRef:
+                resource: limits.memory
           resources:
             requests:
               cpu: 500m
