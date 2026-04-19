@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  # If application is deleted, resource itself is deleted
+  # finalizers:
+  #   - resources-finalizer.argocd.argoproj.io
+  name: istio-base
+  namespace: argocd
+spec:
+  destination:
+    namespace: istio-system
+    name: in-cluster
+  project: default
+  source:
+    repoURL: https://istio-release.storage.googleapis.com/charts
+    chart: base
+    targetRevision: 1.17.2
+    helm:
+      releaseName: istio-base
+      valuesObject:
+        base:
+          enableCRDTemplates: true
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - ServerSideApply=true
