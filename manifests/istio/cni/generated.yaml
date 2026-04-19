@@ -33,8 +33,7 @@ data:
           "name": "istio-cni",
           "type": "istio-cni",
           "log_level": "debug",
-          "log_uds_address": "__LOG_UDS_ADDRESS__",
-          
+          "log_uds_address": "__LOG_UDS_ADDRESS__", 
           "kubernetes": {
               "kubeconfig": "__KUBECONFIG_FILEPATH__",
               "cni_bin_dir": "/opt/cni/bin",
@@ -55,8 +54,11 @@ metadata:
     operator.istio.io/component: "Cni"
 rules:
 - apiGroups: [""]
-  resources: ["pods","nodes","namespaces"]
-  verbs: ["get", "list", "watch"]
+  resources:
+  - pods
+  - nodes
+  verbs:
+  - get
 ---
 # Source: cni/templates/clusterrole.yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -70,12 +72,12 @@ metadata:
     install.operator.istio.io/owning-resource: unknown
     operator.istio.io/component: "Cni"
 rules:
-  - apiGroups: [""]
-    resources: ["pods"]
-    verbs: ["watch", "get", "list"]
-  - apiGroups: [""]
-    resources: ["pods"]
-    verbs: ["delete"]
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list", "watch", "delete", "patch", "update" ]
+- apiGroups: [""]
+  resources: ["events"]
+  verbs: ["get", "list", "watch", "delete", "patch", "update", "create" ]
 ---
 # Source: cni/templates/clusterrolebinding.yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -146,17 +148,14 @@ spec:
         sidecar.istio.io/inject: "false"
       annotations:
         sidecar.istio.io/inject: "false"
-        ambient.istio.io/redirection: disabled
         # Add Prometheus Scrape annotations
         prometheus.io/scrape: 'true'
         prometheus.io/port: "15014"
         prometheus.io/path: '/metrics'
         # Custom annotations
     spec:
-      
       nodeSelector:
         kubernetes.io/os: linux
-      # Can be configured to allow for excluding instio-cni from being scheduled on specified nodes
       tolerations:
         # Make sure istio-cni-node gets scheduled on all nodes.
         - effect: NoSchedule
@@ -175,7 +174,7 @@ spec:
         # This container installs the Istio CNI binaries
         # and CNI network config file on each node.
         - name: install-cni
-          image: "docker.io/istio/install-cni:1.18.7"
+          image: "docker.io/istio/install-cni:1.17.2"
           readinessProbe:
             httpGet:
               path: /readyz
@@ -207,7 +206,7 @@ spec:
                 fieldRef:
                   fieldPath: spec.nodeName
             - name: REPAIR_LABEL_PODS
-              value: "false"
+              value: "true"
             # Set to true to enable pod deletion
             - name: REPAIR_DELETE_PODS
               value: "true"
@@ -221,13 +220,6 @@ spec:
               value: "cni.istio.io/uninitialized"
             - name: REPAIR_BROKEN_POD_LABEL_VALUE
               value: "true"
-            - name: NODE_NAME
-              valueFrom:
-                fieldRef:
-                  apiVersion: v1
-                  fieldPath: spec.nodeName
-            - name: LOG_LEVEL
-              value: "debug"
           volumeMounts:
             - mountPath: /host/opt/cni/bin
               name: cni-bin-dir
@@ -251,9 +243,6 @@ spec:
         - name: cni-log-dir
           hostPath:
             path: /var/run/istio-cni
-        - name: cni-netns-dir
-          hostPath:
-            path: /var/run/netns
 ---
 # Source: cni/templates/clusterrolebinding.yaml
 ---

@@ -28,17 +28,14 @@ spec:
         sidecar.istio.io/inject: "false"
       annotations:
         sidecar.istio.io/inject: "false"
-        ambient.istio.io/redirection: disabled
         # Add Prometheus Scrape annotations
         prometheus.io/scrape: 'true'
         prometheus.io/port: "15014"
         prometheus.io/path: '/metrics'
         # Custom annotations
     spec:
-      
       nodeSelector:
         kubernetes.io/os: linux
-      # Can be configured to allow for excluding instio-cni from being scheduled on specified nodes
       tolerations:
         # Make sure istio-cni-node gets scheduled on all nodes.
         - effect: NoSchedule
@@ -57,7 +54,7 @@ spec:
         # This container installs the Istio CNI binaries
         # and CNI network config file on each node.
         - name: install-cni
-          image: "docker.io/istio/install-cni:1.18.7"
+          image: "docker.io/istio/install-cni:1.17.2"
           readinessProbe:
             httpGet:
               path: /readyz
@@ -89,7 +86,7 @@ spec:
                 fieldRef:
                   fieldPath: spec.nodeName
             - name: REPAIR_LABEL_PODS
-              value: "false"
+              value: "true"
             # Set to true to enable pod deletion
             - name: REPAIR_DELETE_PODS
               value: "true"
@@ -103,13 +100,6 @@ spec:
               value: "cni.istio.io/uninitialized"
             - name: REPAIR_BROKEN_POD_LABEL_VALUE
               value: "true"
-            - name: NODE_NAME
-              valueFrom:
-                fieldRef:
-                  apiVersion: v1
-                  fieldPath: spec.nodeName
-            - name: LOG_LEVEL
-              value: "debug"
           volumeMounts:
             - mountPath: /host/opt/cni/bin
               name: cni-bin-dir
@@ -133,6 +123,3 @@ spec:
         - name: cni-log-dir
           hostPath:
             path: /var/run/istio-cni
-        - name: cni-netns-dir
-          hostPath:
-            path: /var/run/netns

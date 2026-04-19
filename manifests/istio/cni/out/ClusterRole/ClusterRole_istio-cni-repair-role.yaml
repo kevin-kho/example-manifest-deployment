@@ -10,9 +10,9 @@ metadata:
     install.operator.istio.io/owning-resource: unknown
     operator.istio.io/component: "Cni"
 rules:
-  - apiGroups: [""]
-    resources: ["pods"]
-    verbs: ["watch", "get", "list"]
-  - apiGroups: [""]
-    resources: ["pods"]
-    verbs: ["delete"]
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list", "watch", "delete", "patch", "update" ]
+- apiGroups: [""]
+  resources: ["events"]
+  verbs: ["get", "list", "watch", "delete", "patch", "update", "create" ]

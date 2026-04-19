@@ -4,8 +4,8 @@ CNI="$ROOT/cni"
 ISTIOD="$ROOT/istiod"
 # TODO: Gateways
 
-# VERSION="1.17.2"
-VERSION="1.18.7"
+VERSION="1.17.2"
+# VERSION="1.18.7"
 
 cd $BASE
 helm template istio-base istio/base -n istio-system --version $VERSION -f values.yaml > generated.yaml

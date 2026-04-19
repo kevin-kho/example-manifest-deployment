@@ -11,5 +11,8 @@ metadata:
     operator.istio.io/component: "Cni"
 rules:
 - apiGroups: [""]
-  resources: ["pods","nodes","namespaces"]
-  verbs: ["get", "list", "watch"]
+  resources:
+  - pods
+  - nodes
+  verbs:
+  - get
