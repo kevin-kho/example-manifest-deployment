@@ -1,0 +1,6 @@
+kubectl diff -f out/ServiceAccount/ServiceAccount_istio-ingressgateway_istio-system.yaml
+kubectl diff -f out/Role/Role_istio-ingressgateway_istio-system.yaml
+kubectl diff -f out/RoleBinding/RoleBinding_istio-ingressgateway_istio-system.yaml
+kubectl diff -f out/Service/Service_istio-ingressgateway_istio-system.yaml
+kubectl diff -f out/Deployment/Deployment_istio-ingressgateway_istio-system.yaml
+kubectl diff -f out/HorizontalPodAutoscaler/HorizontalPodAutoscaler_istio-ingressgateway_istio-system.yaml
