@@ -15,13 +15,6 @@ kubectl diff -f out/Deployment/Deployment_istiod_istio-system.yaml
 kubectl diff -f out/HorizontalPodAutoscaler/HorizontalPodAutoscaler_istiod_istio-system.yaml
 kubectl diff -f out/MutatingWebhookConfiguration/MutatingWebhookConfiguration_istio-sidecar-injector.yaml
 kubectl diff -f out//_.yaml
-kubectl diff -f out/EnvoyFilter/EnvoyFilter_stats-filter-1.13_istio-system.yaml
-kubectl diff -f out/EnvoyFilter/EnvoyFilter_tcp-stats-filter-1.13_istio-system.yaml
-kubectl diff -f out/EnvoyFilter/EnvoyFilter_stats-filter-1.14_istio-system.yaml
-kubectl diff -f out/EnvoyFilter/EnvoyFilter_tcp-stats-filter-1.14_istio-system.yaml
-kubectl diff -f out/EnvoyFilter/EnvoyFilter_stats-filter-1.15_istio-system.yaml
-kubectl diff -f out/EnvoyFilter/EnvoyFilter_tcp-stats-filter-1.15_istio-system.yaml
-kubectl diff -f out/EnvoyFilter/EnvoyFilter_stats-filter-1.16_istio-system.yaml
-kubectl diff -f out/EnvoyFilter/EnvoyFilter_tcp-stats-filter-1.16_istio-system.yaml
-kubectl diff -f out/EnvoyFilter/EnvoyFilter_stats-filter-1.17_istio-system.yaml
-kubectl diff -f out/EnvoyFilter/EnvoyFilter_tcp-stats-filter-1.17_istio-system.yaml
+kubectl diff -f out//_.yaml
+kubectl diff -f out//_.yaml
+kubectl diff -f out//_.yaml
