@@ -46,6 +46,8 @@ spec:
       prune: true
       selfHeal: true
   ignoreDifferences:
+    # values are patched in on run-time.
+    # ignored to keep things in sync
     - group: admissionregistration.k8s.io
       kind: ValidatingWebhookConfiguration
       name: istiod-default-validator
