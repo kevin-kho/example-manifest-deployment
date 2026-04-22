@@ -61,29 +61,26 @@ spec:
 
 ---
 # istio-cni
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  # If application is deleted, resource itself is deleted
-  # finalizers:
-  # - resources-finalizer.argocd.argoproj.io
-  name: istio-cni
-  namespace: argocd
-spec:
-  destination:
-    namespace: argocd # where the child app manifests will be created/applied
-    name: in-cluster
-  project: default
-  source:
-    path: manifests/istio/cni/out
-    repoURL: https://github.com/kevin-kho/example-manifest-deployment
-    targetRevision: HEAD
-    directory:
-      recurse: true
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: istio-cni
+#   namespace: argocd
+# spec:
+#   destination:
+#     namespace: argocd # where the child app manifests will be created/applied
+#     name: in-cluster
+#   project: default
+#   source:
+#     path: manifests/istio/cni/out
+#     repoURL: https://github.com/kevin-kho/example-manifest-deployment
+#     targetRevision: HEAD
+#     directory:
+#       recurse: true
+#   syncPolicy:
+#     automated:
+#       prune: true
+#       selfHeal: true
 
 ---
 # istio-istiod
