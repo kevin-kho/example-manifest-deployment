@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  # If application is deleted, resource itself is deleted
+  # finalizers:
+  # - resources-finalizer.argocd.argoproj.io
+  name: kyverno-app
+  namespace: argocd
+spec:
+  destination:
+    namespace: kyverno # where the child app manifests will be created/applied
+    name: in-cluster
+  project: default
+  source:
+    chart: kyverno
+    repoURL: https://kyverno.github.io/kyverno
+    targetRevision: 3.8.0
+    helm:
+      releaseName: kyverno
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - ServerSideApply=true
